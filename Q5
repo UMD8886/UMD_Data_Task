@@ -1,0 +1,12 @@
+SELECT
+    c.Country,
+    COUNT(o.Order_ID) AS Total_Transactions,
+    SUM(o.Amount) AS Total_Sales_Amount
+FROM Customer c
+JOIN "Order" o
+    ON c.Customer_ID = o.Customer_ID
+GROUP BY c.Country
+ORDER BY
+    Total_Transactions ASC,
+    Total_Sales_Amount ASC
+LIMIT 1
