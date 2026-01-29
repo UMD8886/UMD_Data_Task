@@ -1,0 +1,20 @@
+WITH Product_Count AS (
+    SELECT
+        c.Country,
+        o.Item,
+        COUNT(*) AS Purchase_Count,
+        RANK() OVER (
+            PARTITION BY c.Country
+            ORDER BY COUNT(*) DESC
+        ) AS rnk
+    FROM Customer c
+    JOIN "Order" o
+        ON c.Customer_ID = o.Customer_ID
+    GROUP BY c.Country, o.Item
+)
+SELECT
+    Country,
+    Item AS Most_Purchased_Product,
+    Purchase_Count
+FROM Product_Count
+WHERE rnk = 1;
