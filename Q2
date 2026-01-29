@@ -1,0 +1,17 @@
+SELECT
+    c.Customer_ID,
+    c.First,
+    c.Last,
+    o.Item AS Product,
+    COUNT(o.Order_ID) AS Total_Transactions,
+    COUNT(o.Order_ID) AS Total_Quantity_Sold,
+    SUM(o.Amount) AS Total_Amount_Spent
+FROM Customer c
+JOIN "Order" o
+    ON c.Customer_ID = o.Customer_ID
+GROUP BY
+    c.Customer_ID,
+    c.First,
+    c.Last,
+    o.Item
+ORDER BY c.Customer_ID;
